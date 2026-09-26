@@ -8,17 +8,13 @@
           href="https://v3.flowbite.com/"
           class="flex items-center space-x-3 rtl:space-x-reverse"
         >
-          <img
-            src="https://flowbite.com/images/logo.svg"
-            class="h-8"
-            alt="Flowbite Logo"
-          />
+          <img src="/favicon.ico" class="h-8" alt="Nuxt" />
           <span
             class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white"
-            >Flowbite</span
+            >Nuxt</span
           >
         </a>
-      <SearchBar/>
+        <SearchBar />
         <div
           class="items-center justify-between hidden w-full md:flex md:w-auto md:order-1"
           id="navbar-search"
@@ -82,7 +78,6 @@
   </div>
 </template>
 
-<script setup>
-</script>
+<script setup></script>
 
 <style scoped></style>
