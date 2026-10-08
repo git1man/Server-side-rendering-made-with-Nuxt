@@ -1,7 +1,7 @@
 <template>
     <div>
        <products/>
-       <Cart/>
+       <cart/>
     </div>
 </template>
 

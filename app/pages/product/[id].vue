@@ -1,7 +1,7 @@
 <template>
   <div v-if="product" class="max-w-7xl mx-auto py-8 px-4">
     <NuxtLink
-      to="/products"
+      to="/"
       class="inline-flex items-center gap-1 text-sm text-gray-600 hover:text-green-700 mb-6"
     >
       <svg

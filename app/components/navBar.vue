@@ -4,8 +4,7 @@
       <div
         class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4"
       >
-        <a
-          href="https://v3.flowbite.com/"
+        <NuxtLink to="/"
           class="flex items-center space-x-3 rtl:space-x-reverse"
         >
           <img src="/favicon.ico" class="h-8" alt="Nuxt" />
@@ -13,7 +12,7 @@
             class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white"
             >Nuxt</span
           >
-        </a>
+        </NuxtLink>
         <SearchBar />
         <div
           class="items-center justify-between hidden w-full md:flex md:w-auto md:order-1"
