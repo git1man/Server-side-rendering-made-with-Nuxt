@@ -8,23 +8,29 @@
         :key="product.id"
         class="group bg-white rounded-xl border border-gray-200 overflow-hidden hover:shadow-lg transition-shadow duration-200"
       >
-        <NuxtLink class="group" :to="`/product/${product.id}`">
-          <div class="aspect-square bg-gray-100 overflow-hidden relative">
-            <!-- الصورة الأساسية -->
-            <img
-              :src="product.thumbnail"
-              :alt="product.title"
-              class="w-full h-full object-cover transition-all duration-200 group-hover:scale-105"
-              :class="{ 'group-hover:opacity-0': product.images.length > 1 }"
-            />
+        <NuxtLink :to="`product/${product.id}`">
+          <div class="group/card">
+            <div
+              class="group/image aspect-square bg-gray-100 overflow-hidden relative"
+            >
+              <!-- الصورة الأساسية -->
+              <img
+                :src="product.thumbnail"
+                :alt="product.title"
+                class="w-full h-full object-cover transition-all duration-200 group-hover/image:scale-105"
+                :class="{
+                  'group-hover/image:opacity-0': product.images.length > 1,
+                }"
+              />
 
-            <!-- صورة Hover -->
-            <img
-              v-if="product.images.length > 1"
-              :src="product.images[1]"
-              :alt="product.title"
-              class="absolute inset-0 w-full h-full object-cover opacity-0 transition-all duration-200 group-hover:opacity-100 group-hover:scale-105"
-            />
+              <!-- صورة Hover -->
+              <img
+                v-if="product.images.length > 1"
+                :src="product.images[1]"
+                :alt="product.title"
+                class="absolute inset-0 w-full h-full object-cover opacity-0 transition-all duration-200 group-hover/image:opacity-100 group-hover/image:scale-105"
+              />
+            </div>
           </div>
         </NuxtLink>
 
@@ -37,13 +43,20 @@
             {{ product.description }}
           </h6>
 
-          <p class="mt-1 text-lg font-semibold text-green-800">
-            ${{ product.price }}
-          </p>
+          <div class="flex items-center justify-between">
+            <p class="text-lg font-semibold text-green-800">
+              ${{ product.price }}
+            </p>
 
+            <p
+              class="rounded-md bg-yellow-100 px-2 py-1 text-sm font-semibold text-yellow-800"
+            >
+              <span class="text-yellow-400">★</span> {{ product.rating }}
+            </p>
+          </div>
           <div class="flex justify-end mt-3">
             <button
-              class="rounded-md bg-green-600 px-4 py-2 text-white hover:bg-green-400"
+              class="rounded-md bg-green-600 px-4 py-2 text-white hover:bg-green-400 cursor-pointer"
             >
               Add To Cart
             </button>
@@ -54,17 +67,14 @@
   </div>
 </template>
 <script setup>
-import { getProducts } from '~/services/services';
 const store = useProductStore();
-const route=useRoute()
-await callOnce("products", () => store.fetchProducts());
-await useAsyncData(
-  `product-${route.params.id}`,
-  ()=> getProducts(route.params.id)
-)
-
-if (import.meta.server) {
-  console.log(store.products);
+try {
+  await callOnce("products", () => store.fetchProducts());
+} catch (error) {
+  throw createError({
+    statusCode: 500,
+    statusMessage: "failed to load data",
+  });
 }
 </script>
 
