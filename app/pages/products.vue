@@ -56,9 +56,20 @@
           </div>
           <div class="flex justify-end mt-3">
             <button
-              class="rounded-md bg-green-600 px-4 py-2 text-white hover:bg-green-400 cursor-pointer"
+              v-if="isMounted"
+              class="rounded-md px-4 py-2 text-white cursor-pointer"
+              :class="
+                store.isInCart(product.id)
+                  ? 'bg-red-500 hover:bg-red-400'
+                  : 'bg-green-600 hover:bg-green-400'
+              "
+              @click="
+                store.isInCart(product.id)
+                  ? store.removeItemFromCart(product.id)
+                  : store.addToCart(product)
+              "
             >
-              Add To Cart
+              {{ store.isInCart(product.id) ? "Remove Item" : "Add To Cart" }}
             </button>
           </div>
         </div>
@@ -67,14 +78,22 @@
   </div>
 </template>
 <script setup>
+import { ref, onMounted } from "vue";
+const isMounted = ref(false);
 const store = useProductStore();
+onMounted(() => {
+  isMounted.value = true;
+});
 try {
-  await callOnce("products", () => store.fetchProducts());
+  await useAsyncData("products", () => store.fetchProducts());
 } catch (error) {
   throw createError({
     statusCode: 500,
     statusMessage: "failed to load data",
   });
+}
+if (import.meta.server) {
+  console.log(store.products);
 }
 </script>
 

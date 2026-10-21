@@ -132,11 +132,20 @@
 
         <div class="mt-8">
           <button
-            type="button"
-            class="w-full sm:w-auto rounded-md bg-green-600 px-8 py-3 text-white hover:bg-green-400 disabled:bg-gray-300 disabled:cursor-not-allowed"
-            :disabled="product.stock === 0"
+            v-if="isMounted"
+            class="rounded-md px-4 py-2 text-white cursor-pointer"
+            :class="
+              store.isInCart(product.id)
+                ? 'bg-red-500 hover:bg-red-400'
+                : 'bg-green-600 hover:bg-green-400'
+            "
+            @click="
+              store.isInCart(product.id)
+                ? store.removeItemFromCart(product.id)
+                : store.addToCart(product)
+            "
           >
-            Add To Cart
+            {{ store.isInCart(product.id) ? "Remove Item" : "Add To Cart" }}
           </button>
         </div>
       </div>
@@ -164,10 +173,7 @@
         Customer reviews
       </h2>
 
-      <p
-        v-if="!product.reviews?.length"
-        class="mt-4 text-sm text-gray-600"
-      >
+      <p v-if="!product.reviews?.length" class="mt-4 text-sm text-gray-600">
         No reviews yet for this product.
       </p>
 
@@ -206,9 +212,14 @@
 
 <script setup>
 import { getProduct } from "~/services/services";
+import { ref, onMounted } from "vue";
 
+const isMounted = ref(false);
+onMounted(() => {
+  isMounted.value = true;
+});
 const route = useRoute();
-
+const store = useProductStore();
 const { data: product, error } = await useAsyncData(
   `product-${route.params.id}`,
   () => getProduct(route.params.id),

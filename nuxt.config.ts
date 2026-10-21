@@ -1,4 +1,5 @@
 import tailwindcss from "@tailwindcss/vite";
+import { storages } from "./node_modules/pinia-plugin-persistedstate/dist/nuxt/runtime/storages";
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
@@ -8,5 +9,9 @@ export default defineNuxtConfig({
   vite: {
     plugins: [tailwindcss()],
   },
-  modules:['@pinia/nuxt']
+  modules: ["@pinia/nuxt", "pinia-plugin-persistedstate/nuxt"],
+  
+  piniaPluginPersistedstate: {
+    storage : "localStorage",
+  },
 });

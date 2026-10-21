@@ -1,6 +1,10 @@
+const mainServer="https://dummyjson.com/products"
 export function getProducts() {
-  return $fetch("https://dummyjson.com/products");
+  return $fetch(mainServer);
 }
 export function getProduct(id) {
-  return $fetch(`https://dummyjson.com/products/${id}`);
+  return $fetch(`${mainServer}/${id}`);
+}
+export function getCatagouries(categories){
+return $fetch(`${mainServer}/${categories}`)
 }
