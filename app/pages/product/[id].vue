@@ -1,8 +1,8 @@
 <template>
   <div v-if="product" class="max-w-7xl mx-auto py-8 px-4">
-    <NuxtLink
-      to="/"
-      class="inline-flex items-center gap-1 text-sm text-gray-600 hover:text-green-700 mb-6"
+    <div
+      @click="$router.back()"
+      class="inline-flex items-center gap-1 text-sm text-gray-600 hover:text-green-700 mb-6 cursor-pointer"
     >
       <svg
         class="w-4 h-4"
@@ -17,7 +17,7 @@
         />
       </svg>
       Back to products
-    </NuxtLink>
+    </div>
 
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
       <!-- Gallery -->

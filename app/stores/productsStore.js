@@ -8,19 +8,20 @@ export const useProductStore = defineStore("products", {
     products: [],
     loading: false,
     cart: [],
+    total:0,
     error: null,
   }),
 
   actions: {
-    async fetchProducts() {
+    async fetchProducts(limit = 15, skip = 0) {
       this.loading = true;
       this.error = null;
 
       try {
-        const response = await getProducts();
+        const response = await getProducts(limit, skip);
 
         this.products = response.products;
-
+        this.total = response.total;
         return response.products;
       } catch (err) {
         this.error = `Failed to load products: ${err.message}`;
@@ -36,7 +37,7 @@ export const useProductStore = defineStore("products", {
         check.quantity++;
         console.log(product.id);
         console.log(product.quantity);
-        console.log(Object.keys(product))
+        console.log(Object.keys(product));
       } else {
         this.cart.push({
           id: product.id,
